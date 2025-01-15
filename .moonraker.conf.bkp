@@ -1,0 +1,96 @@
+[server]
+host = 0.0.0.0
+port = 7125
+klippy_uds_address = /home/tla/printer_data/comms/klippy.sock
+
+[authorization]
+trusted_clients = 
+	10.0.0.0/8
+	127.0.0.0/8
+	169.254.0.0/16
+	172.16.0.0/12
+	192.168.0.0/16
+	192.168.0.100
+	FE80::/10
+	::1/128
+cors_domains = 
+	*.lan
+	*.local
+	*://localhost
+	*://localhost:*
+	*://my.mainsail.xyz
+	*://app.fluidd.xyz
+
+[octoprint_compat]
+
+[history]
+
+[update_manager]
+channel = dev
+refresh_interval = 168
+
+[update_manager mainsail-config]
+type = git_repo
+primary_branch = master
+path = ~/mainsail-config
+origin = https://github.com/mainsail-crew/mainsail-config.git
+managed_services = klipper
+
+[update_manager mainsail]
+type = web
+channel = stable
+repo = mainsail-crew/mainsail
+path = ~/mainsail
+
+[update_manager octoeverywhere]
+type = git_repo
+channel = beta
+path = /home/tla/octoeverywhere
+origin = https://github.com/QuinnDamerell/OctoPrint-OctoEverywhere.git
+env = /home/tla/octoeverywhere-env/bin/python
+requirements = requirements.txt
+install_script = install.sh
+managed_services = 
+	octoeverywhere
+
+[announcements]
+subscriptions = 
+	octoeverywhere
+
+[file_manager]
+queue_gcode_uploads = True
+enable_object_processing = True
+
+[job_queue]
+load_on_startup = True
+
+[power swx2_outlet]
+type = homeassistant
+address = 192.168.0.202
+protocol = http
+port = 8123
+device = switch.outlet_swx2
+token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxNzJjOWI2ZjI0YTA0NTM0YWIyYTViYWEzZTRmYjZkOCIsImlhdCI6MTY4NTMwMDM0NywiZXhwIjoyMDAwNjYwMzQ3fQ.kL3rH5-hWpniahEk14yNV3COzCrp-AEEMbUQF2ngJos
+domain = switch
+status_delay = 1.0
+off_when_shutdown = True
+off_when_shutdown_delay = 30
+on_when_job_queued = True
+locked_while_printing = True
+restart_klipper_when_powered = True
+restart_delay = 5.
+bound_services = 
+
+[update_manager crowsnest]
+type = git_repo
+path = ~/crowsnest
+origin = https://github.com/mainsail-crew/crowsnest.git
+managed_services = crowsnest
+install_script = tools/pkglist.sh
+
+[update_manager led_effect]
+type = git_repo
+path = ~/klipper-led_effect
+origin = https://github.com/julianschill/klipper-led_effect.git
+is_system_service = False
+
